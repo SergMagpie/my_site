@@ -1,1 +1,1 @@
-web: gunicorn portfolio-serhii.wsgi
+web: gunicorn gettingstarted.wsgi
