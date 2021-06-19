@@ -32,7 +32,7 @@ Create a database with the command
 
 ``python manage.py migrate``
 
-Create a user command
+Create a user with the command
 
 ``python manage.py createsuperuser``
 
