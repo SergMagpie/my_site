@@ -30,11 +30,11 @@ Install the required packages with the command
 
 Create a database with the command
 
-''python manage.py migrate''
+``python manage.py migrate``
 
 Create a user command
 
-''python manage.py createsuperuser''
+``python manage.py createsuperuser``
 
 You can then run the project with the command
 
