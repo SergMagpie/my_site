@@ -1,12 +1,13 @@
+from itstep.forms import AddPostForm
 from django.http.response import Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseNotFound
 from .models import *
 # Create your views here.
 
 menu = [
     {'title': "About the site", 'url_name': 'about'},
-    {'title': "Add articl", 'url_name': 'add_page'},
+    {'title': "Add article", 'url_name': 'add_page'},
     {'title': "Feedback", 'url_name': 'contact'},
     {'title': "Login", 'url_name': 'login'},
 ]
@@ -30,10 +31,18 @@ def about(request):
 
 
 def add_page(request):
+    if request.method == 'POST':
+        form = AddPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = AddPostForm()
     return render(
         request,
         'itstep/addpage.html',
         {
+            'form': form,
             'menu': menu,
             'title': 'Add page',
             'cat_selected': None,

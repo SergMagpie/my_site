@@ -4,12 +4,8 @@
 <h1>{{post.title}}</h1>
 {% if post.photo %}
 <!--  -->
-PHOTO
-<!--  -->
-<p><img class="img-article-left" scr="{{post.photo.url}}"></p>
-<!--  -->
-{{post.photo.url}}
-<!--  -->
+<p><img class="img-article-left" src="{{post.photo.url}}"></p>
+
 {% endif %}
 <!--  -->
 {% autoescape on %}

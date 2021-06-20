@@ -1,11 +1,5 @@
 /.vscode
 /my_site_venv
-itstep/__pycache__/admin.cpython-39.pyc
-itstep/__pycache__/models.cpython-39.pyc
-itstep/__pycache__/urls.cpython-39.pyc
-itstep/__pycache__/views.cpython-39.pyc
-itstep/migrations/__pycache__/0001_initial.cpython-39.pyc
-itstep/templatetags/__pycache__/itstep_tags.cpython-39.pyc
-itstep/__pycache__/models.cpython-39.pyc
-itstep/__pycache__/urls.cpython-39.pyc
-itstep/__pycache__/views.cpython-39.pyc
+__pychache__/
+*.pyc
+db.sqlite3

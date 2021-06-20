@@ -3,6 +3,11 @@
 {% block content %}
 <h1>{{title}}</h1>
 <!--  -->
-<p>Page content</p>
+<form action="{% url 'add_page' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!--  -->
+    {{ form.as_p }}
+    <button type="submit">Add</button>
+</form>
 <!--  -->
 {% endblock %}
