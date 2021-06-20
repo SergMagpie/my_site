@@ -6,6 +6,7 @@ from django.urls import reverse
 
 class Exercises(models.Model):
     title = models.CharField(max_length=255, verbose_name='title')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     content = models.TextField(blank=True, verbose_name='content')
     photo = models.ImageField(upload_to="photos/", verbose_name='photo')
     time_create = models.DateTimeField(auto_now_add=True)
@@ -27,7 +28,8 @@ class Exercises(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
+    name = models.CharField(max_length=100, db_index=True, verbose_name="Category")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
     def __str__(self):
         return self.name

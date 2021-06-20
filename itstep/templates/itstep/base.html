@@ -41,7 +41,6 @@
                     <tr>
                         <!-- Left sidebar -->
                         <td valign="top" class="left-chapters">
-                            {% getcats as categories %}
                             <ul id="leftchapters">
                                 {% if cat_selected == 0 %}
                                 <li class="selected">All categories</li>
@@ -49,19 +48,12 @@
                                 <li><a href="{% url 'home' %}">All categories</a></li>
                                 {% endif %}
                                 <!--  -->
-                                {% for c in categories %}
-                                <!--  -->
-                                {% if c.pk == cat_selected %}
-                                <li class="selected">{{c.name}}</a>
-                                </li>
-                                {% else %}
-                                <li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
-                                {% endif %} {% endfor %}
+                                {% show_categories '-name' cat_selected %}
 
-                                <li class="share">
-                                    <p>Channel of my instructor</p>
+                                <!-- <li class="share">
+                                    <p>Channel of instructor</p>
                                     <a class="share-yt" href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists" target="_blank" rel="nofollow"></a>
-                                </li>
+                                </li> -->
                             </ul>
                         </td>
                         <!-- End of sidebar -->

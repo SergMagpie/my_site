@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseNotFound
 from .models import *
 # Create your views here.
@@ -24,7 +24,9 @@ def index(request):
 
 
 def about(request):
-    return render(request, 'itstep/about.html', {'menu': menu, 'title': 'About the site'})
+    return render(request, 'itstep/about.html',
+                  {'menu': menu,
+                   'title': 'About the site'})
 
 
 def add_page(request):
@@ -40,7 +42,15 @@ def login(request):
 
 
 def show_post(request, post_id):
-    return HttpResponse(f'Archive by {post_id}')
+    post = get_object_or_404(Exercises, pk=post_id)
+    context = {
+        'post': post,
+        'menu': menu,
+        'title': post.title,
+        'cat_selected': None,
+    }
+    return render(request, 'itstep/post.html', context=context)
+
 
 def show_category(request, cat_id):
     posts = Exercises.objects.filter(cat_id=cat_id)
@@ -55,6 +65,7 @@ def show_category(request, cat_id):
         'cat_selected': cat_id,
     }
     return render(request, 'itstep/index.html', context=context)
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Page not found :(</h1>')

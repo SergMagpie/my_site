@@ -8,18 +8,18 @@
 
         </div>
         {% if p.photo %}
-        <p><img class="img-article-left thumb" src="{{p.photo.url}}" </p>
-            <!--  -->
-            {% endif %}
-            <h2>{{p.title}}</h2>
-            <!-- екранування тегів -->
-            {% autoescape on %}
-            <!--  -->
-            {{p.content|linebreaks|truncatewords:30}}
-            <!--  -->
-            {% endautoescape %}
-            <div class="clear"></div>
-            <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Read exercise</a></p>
+        <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+        <!--  -->
+        {% endif %}
+        <h2>{{p.title}}</h2>
+        <!-- екранування тегів -->
+        {% autoescape on %}
+        <!--  -->
+        {{p.content|linebreaks|truncatewords:30}}
+        <!--  -->
+        {% endautoescape %}
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Read exercise</a></p>
     </li>
     {% endfor %}
 </ul>

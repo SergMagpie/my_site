@@ -1,0 +1,21 @@
+{% extends 'itstep/base.html' %}
+<!--  -->
+{% block content %}
+<h1>{{post.title}}</h1>
+{% if post.photo %}
+<!--  -->
+PHOTO
+<!--  -->
+<p><img class="img-article-left" scr="{{post.photo.url}}"></p>
+<!--  -->
+{{post.photo.url}}
+<!--  -->
+{% endif %}
+<!--  -->
+{% autoescape on %}
+<!--  -->
+{{post.content|linebreaks}}
+<!--  -->
+{% endautoescape %}
+<!--  -->
+{% endblock %}
