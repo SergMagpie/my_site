@@ -30,7 +30,15 @@ def about(request):
 
 
 def add_page(request):
-    return HttpResponse(f'add_page')
+    return render(
+        request,
+        'itstep/addpage.html',
+        {
+            'menu': menu,
+            'title': 'Add page',
+            'cat_selected': None,
+        }
+    )
 
 
 def contact(request):
@@ -41,8 +49,8 @@ def login(request):
     return HttpResponse(f'login')
 
 
-def show_post(request, post_id):
-    post = get_object_or_404(Exercises, pk=post_id)
+def show_post(request, post_slug):
+    post = get_object_or_404(Exercises, slug=post_slug)
     context = {
         'post': post,
         'menu': menu,
@@ -52,8 +60,9 @@ def show_post(request, post_id):
     return render(request, 'itstep/post.html', context=context)
 
 
-def show_category(request, cat_id):
-    posts = Exercises.objects.filter(cat_id=cat_id)
+def show_category(request, cat_slug):
+    cat = get_object_or_404(Category, slug=cat_slug)
+    posts = Exercises.objects.filter(cat_id=cat.pk)
 
     if len(posts) == 0:
         raise Http404()
@@ -61,8 +70,8 @@ def show_category(request, cat_id):
     context = {
         'posts': posts,
         'menu': menu,
-        'title': 'Main page',
-        'cat_selected': cat_id,
+        'title': cat.name,
+        'cat_selected': cat.pk,
     }
     return render(request, 'itstep/index.html', context=context)
 
