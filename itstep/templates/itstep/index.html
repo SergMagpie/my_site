@@ -13,7 +13,7 @@
         {% endif %}
         <h2>{{p.title}}</h2>
         <!-- екранування тегів -->
-        {% autoescape on %}
+        {% autoescape off %}
         <!--  -->
         {{p.content|linebreaks|truncatewords:30}}
         <!--  -->
