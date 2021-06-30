@@ -11,14 +11,21 @@ class AddPostForm(forms.ModelForm):
     def __init__(self,
                  *args,
                  **kwargs) -> None:
+        self.author = kwargs['initial']['author']
         super().__init__(*args,
                          **kwargs)
         self.fields['cat'].empty_label = "Not changed"
 
+    def save(self, commit=True):
+        obj = super(AddPostForm, self).save(False)
+        obj.author = self.author
+        commit and obj.save()
+        return obj
+
     class Meta:
         model = Exercises
         fields = '__all__'
-        exclude = ['slug']
+        exclude = ['slug', 'author']
 
         widgets = {
             'title': forms.TextInput(attrs={

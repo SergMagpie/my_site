@@ -53,6 +53,12 @@ class AddPostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'itstep/addpage.html'
     login_url = 'login'
 
+    def get_initial(self):
+        self.initial.update({
+            'author': self.request.user
+        })
+        return self.initial
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         insert_def = {

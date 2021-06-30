@@ -18,9 +18,9 @@ def menu(request):
         }
     # else:
     #     main_menu.pop(3)
-    current_frame = inspect.currentframe()
-    previous_frame = current_frame.f_back
-    ic(previous_frame.f_code.co_name, request, request.user.username)
+    # current_frame = inspect.currentframe()
+    # previous_frame = current_frame.f_back
+    # ic(previous_frame.f_code.co_name, request, request.user.username)
     return main_menu
 
 

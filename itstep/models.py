@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 import itertools
 from unidecode import unidecode
 
@@ -19,6 +20,8 @@ class Exercises(models.Model):
     is_published = models.BooleanField(default=True)
     cat = models.ForeignKey('Category',
                             on_delete=models.PROTECT)
+    author = models.ForeignKey(User, blank=True,
+                                on_delete=models.CASCADE)
 
     def _generate_slug(self):
         max_length = self._meta.get_field('slug').max_length
@@ -34,7 +37,6 @@ class Exercises(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             self._generate_slug()
-
         super().save(*args, **kwargs)
 
     def __str__(self):
