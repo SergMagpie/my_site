@@ -1,4 +1,5 @@
 from django import template
+from django.db.models import Count
 from itstep.models import *
 
 register = template.Library()
@@ -12,7 +13,7 @@ register = template.Library()
 @register.inclusion_tag('itstep/list_categories.html')
 def show_categories(sort=None, cat_selected=0):
     if not sort:
-        cats = Category.objects.all()
+        cats = Category.objects.annotate(Count('exercises'))
     else:
-        cats = Category.objects.order_by(sort)
+        cats = Category.objects.annotate(Count('exercises')).order_by(sort)
     return {"cats": cats, "cat_selected": cat_selected}

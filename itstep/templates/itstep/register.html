@@ -1,0 +1,9 @@
+{% extends 'itstep/base.html' %} 
+{% block content %}
+<h1>{{title}}</h1>
+<form method="POST">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <button type="submit">Registration</button>
+</form>
+{% endblock %}

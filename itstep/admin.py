@@ -10,6 +10,7 @@ class ExercisesAdmin(admin.ModelAdmin):
         'title',
         'time_create',
         'photo',
+        'cat',
         'is_published')
     list_display_links = ('id', 'title')
     search_fields = ('title', 'content')

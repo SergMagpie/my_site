@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import django_heroku
 import os
 from pathlib import Path
 from decouple import config
@@ -135,12 +136,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Configure Django App for Heroku.
-import django_heroku
 django_heroku.settings(locals())
 
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID') #'AKIAIT2Z5TDYPX3ARJBA'
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY') #'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'
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME') #sibtc-static'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')  # 'AKIAIT2Z5TDYPX3ARJBA'
+# 'qR+vjWPU50fCqQuUWbj9Fain/j2pV+ZtBCiDiieS'
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')  # sibtc-static'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -153,4 +154,11 @@ AWS_LOCATION = 'static'
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-DEFAULT_FILE_STORAGE = 'my_site.storage_backends.MediaStorage'  # <-- here is where we reference it
+# <-- here is where we reference it
+DEFAULT_FILE_STORAGE = 'my_site.storage_backends.MediaStorage'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_SES_REGION_NAME = config('REGION-NAME')  # (ex: us-east-2)
+# # (ex: email.us-east-2.amazonaws.com)
+AWS_SES_REGION_ENDPOINT = config('REGION-ENDPOINT')
