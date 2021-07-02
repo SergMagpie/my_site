@@ -1,4 +1,5 @@
 from django.db import models
+# from django.db.models.deletion import CASCADE
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
@@ -21,7 +22,7 @@ class Exercises(models.Model):
     cat = models.ForeignKey('Category',
                             on_delete=models.PROTECT)
     author = models.ForeignKey(User, blank=True,
-                                on_delete=models.CASCADE)
+                               on_delete=models.CASCADE)
 
     def _generate_slug(self):
         max_length = self._meta.get_field('slug').max_length
@@ -67,3 +68,23 @@ class Category(models.Model):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
         ordering = ['id']
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Exercises,
+        related_name='comments',
+        on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.name, self.post)

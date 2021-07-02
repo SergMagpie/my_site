@@ -69,7 +69,7 @@ class AddPostCreateView(LoginRequiredMixin, CreateView):
 
 
 class RegisterUser(CreateView):
-    form_class = UserCreationForm
+    form_class = UserForm
     template_name = 'itstep/register.html'
     success_url = reverse_lazy('login')
 
@@ -119,12 +119,44 @@ class ShowPostDetailView(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        # ic(context)
+        comments = context['object'].comments.filter(active=True)
+        comment_profile = {}
+        if self.request.user.is_authenticated:
+            comment_profile = {
+                'name': self.request.user.username,
+                'email': self.request.user.email,
+                'body': '',
+            }
+        comment_form = CommentForm(comment_profile)
         insert_def = {
             'title': context['post'].title,
             'menu': menu(self.request),
             'cat_selected': None,
+            'comments': comments,
+            'comment_form': comment_form,
         }
         return dict(list(context.items()) + list(insert_def.items()))
+
+    def post(self, request, *args, **kwargs):
+        ic(self.request.POST, self.__dict__, request, args, kwargs)
+        if request.method == 'POST':
+            # A comment was posted
+            comment_form = CommentForm(data=request.POST)
+            if comment_form.is_valid():
+                # Create Comment object but don't save to database yet
+                new_comment = comment_form.save(commit=False)
+                # Assign the current post to the comment
+                new_comment.post = Exercises.objects.get(slug=kwargs['post_slug'])
+                # Save the comment to the database
+                new_comment.save()
+        return redirect('post', kwargs['post_slug'])
+    # def get_initial(self):
+    #     ic(self)
+    #     # self.initial.update({
+    #     #     'author': self.request.user
+    #     # })
+    #     return self.initial
 
 
 class CategoryListView(ListView):
