@@ -1,45 +1,45 @@
 {% extends 'itstep/base.html' %} {% block content %}
 <h1>{{title}}</h1>
 <div>
-    <div>The <strong>my_site</strong> resource was created to do a homework called <strong>Final Project</strong>.&nbsp;</div>
+    <div>The <strong>my_site</strong> resource was created to do a homework called <strong>Final Project</strong>. </div>
     <br />
     <div>The site is a mini-blog, which I plan to fill in the future with small articles about how I studied at the ItStep academy and, in fact, did my homework.</div>
     <br />
     <div>According to the task, the project includes technologies for storing data in the <strong>database</strong> (SQL) - <strong>validation</strong> of extreme cases so that users can not hack services - <strong>tests</strong>.</div>
     <br />
-    <div>In&nbsp;the&nbsp;future,&nbsp;it&nbsp;is&nbsp;planned&nbsp;to&nbsp;develop&nbsp;the&nbsp;portfolio&nbsp;by&nbsp;adding&nbsp;new&nbsp;modules.</div>
+    <div>In the future, it is planned to develop the portfolio by adding new modules.</div>
     <br />
-    <div>To start a project <em>(sample code is for windows, if you already have linux, you already know it;)</em>&nbsp;it must be cloned to a computer with the command</div>
-    <div>&nbsp;</div>
+    <div>To start a project <em>(sample code is for windows, if you already have linux, you already know it;)</em> it must be cloned to a computer with the command</div>
+    <div> </div>
     <div><code>git clone https://github.com/SergMagpie/my_site.git</code></div>
     <br />
-    <div>Then&nbsp;go&nbsp;to&nbsp;the&nbsp;folder&nbsp;my_site&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>Then go to the folder my_site with the command</div>
     <br />
     <div><code>cd my_syte</code></div>
     <br />
-    <div>Create&nbsp;a&nbsp;virtual&nbsp;environment&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>Create a virtual environment with the command</div>
     <br />
     <div><code>python -m venv venv_for_my_site</code></div>
     <br />
-    <div>Activate&nbsp;it&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>Activate it with the command</div>
     <br />
     <div><code>venv_for_my_site\Scripts\activate.bat</code></div>
     <br />
-    <div>Install&nbsp;the&nbsp;required&nbsp;packages&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>Install the required packages with the command</div>
     <br />
     <div><code>pip install requirements.txt</code></div>
     <br />
-    <div>Create&nbsp;a&nbsp;database&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>Create a database with the command</div>
     <br />
     <div><code>python manage.py migrate</code></div>
     <br />
-    <div>Create&nbsp;a&nbsp;user&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>Create a user with the command</div>
     <br />
     <div><code>python manage.py createsuperuser</code></div>
     <br />
-    <div>You&nbsp;can&nbsp;then&nbsp;run&nbsp;the&nbsp;project&nbsp;with&nbsp;the&nbsp;command</div>
+    <div>You can then run the project with the command</div>
     <br />
     <div><code>python manage.py runserver</code></div>
     <br />
-    <div>In&nbsp;which&nbsp;case,&nbsp;please&nbsp;<a title="contact" href="mailto:sergmagpie@gmail.com?subject=letter from my site">contact</a>&nbsp;with&nbsp;me.</div>
+    <div>For all questions, please <a title="contact" href="{% url 'contact' %}">contact</a> with me.</div>
 </div> {% endblock %}

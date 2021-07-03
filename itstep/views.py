@@ -1,5 +1,5 @@
 from icecream import ic
-from django.http.response import Http404
+from django.http.response import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views.generic import CreateView, ListView, UpdateView, TemplateView, DetailView
@@ -23,7 +23,8 @@ class IndexListView(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        return Exercises.objects.filter(is_published=True)
+        # after debugging, the select_related add-on was created
+        return Exercises.objects.filter(is_published=True).select_related('cat')
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -119,7 +120,6 @@ class ShowPostDetailView(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        # ic(context)
         comments = context['object'].comments.filter(active=True)
         comment_profile = {}
         if self.request.user.is_authenticated:
@@ -139,7 +139,6 @@ class ShowPostDetailView(DetailView):
         return dict(list(context.items()) + list(insert_def.items()))
 
     def post(self, request, *args, **kwargs):
-        ic(self.request.POST, self.__dict__, request, args, kwargs)
         if request.method == 'POST':
             # A comment was posted
             comment_form = CommentForm(data=request.POST)
@@ -147,16 +146,20 @@ class ShowPostDetailView(DetailView):
                 # Create Comment object but don't save to database yet
                 new_comment = comment_form.save(commit=False)
                 # Assign the current post to the comment
-                new_comment.post = Exercises.objects.get(slug=kwargs['post_slug'])
+                new_comment.post = Exercises.objects.get(
+                    slug=kwargs['post_slug'])
                 # Save the comment to the database
                 new_comment.save()
-        return redirect('post', kwargs['post_slug'])
-    # def get_initial(self):
-    #     ic(self)
-    #     # self.initial.update({
-    #     #     'author': self.request.user
-    #     # })
-    #     return self.initial
+
+                self.object = self.get_object()
+                context = self.get_context_data(**kwargs)
+                # context['comment_form'] = comment_form
+                return self.render_to_response(context=context)
+            else:
+                self.object = self.get_object()
+                context = self.get_context_data(**kwargs)
+                context['comment_form'] = comment_form
+                return self.render_to_response(context=context)
 
 
 class CategoryListView(ListView):
@@ -177,7 +180,11 @@ class CategoryListView(ListView):
         return dict(list(context.items()) + list(insert_def.items()))
 
     def get_queryset(self):
-        return Exercises.objects.filter(cat__slug=self.kwargs['cat_slug'])
+        # after debugging, the select_related add-on was created
+        return Exercises.objects.filter(
+            cat__slug=self.kwargs['cat_slug'],
+            is_published=True
+        ).select_related('cat')
 
 
 def pageNotFound(request, exception):
@@ -203,7 +210,14 @@ def contact(request):
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect("home")
-
+        else:
+            form = ContactForm(request.POST)
+            return render(
+                request,
+                'itstep/contact.html',
+                {'form': form,
+                 'menu': menu(request),
+                 'title': 'Contact'})
     form = ContactForm()
     return render(request, 'itstep/contact.html', {'form': form,
                                                    'menu': menu(request),

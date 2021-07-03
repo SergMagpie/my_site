@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    # # these settings were created for debug_toolbar
+    # 'debug_toolbar',
+    'captcha',
     'itstep.apps.ItstepConfig',
     'storages',
 ]
@@ -53,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # # these settings were created for debug_toolbar
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'my_site.urls'
@@ -163,3 +168,8 @@ AWS_SES_REGION_NAME = 'eu-west-3'
 # (ex: us-east-2)
 # # (ex: email.us-east-2.amazonaws.com)
 AWS_SES_REGION_ENDPOINT = 'email.eu-west-3.amazonaws.com'
+
+# # these settings were created for debug_toolbar
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
