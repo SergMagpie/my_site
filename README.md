@@ -40,4 +40,4 @@ You can then run the project with the command
 
 ``python manage.py runserver``
 
-For all questions, please [contact](https://portfolio-serhii.herokuapp.com/contact/) with me.
+For all questions, please contact with me.
